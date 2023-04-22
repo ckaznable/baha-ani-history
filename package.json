@@ -1,10 +1,9 @@
 {
-  "name": "browser-extension-template",
+  "name": "baha-ani-history",
   "version": "1.0.0",
-  "description": "browser extension template supported manifest v3",
   "type": "module",
   "main": "src/script/background.js",
-  "homepage": "https://github.com/ckaznable/browser-extension-template#readme",
+  "homepage": "https://github.com/ckaznable/baha-ani-history",
   "scripts": {
     "build": "cross-env NODE_ENV=production node util/build.js",
     "build:v2": "cross-env NODE_ENV=production MANIFEST_VERSION=2 node util/build.js",
@@ -14,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ckaznable/browser-extension-template.git"
+    "url": "git+https://github.com/ckaznable/baha-ani-history.git"
   },
   "author": "kami25565@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ckaznable/browser-extension-template/issues"
+    "url": "https://github.com/ckaznable/baha-ani-history/issues"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
