@@ -10,9 +10,11 @@
     "script-src": "self",
     "object-src": "self"
   },
-  "permissions": [],
+  "permissions": [
+    "storage"
+  ],
   "host_permissions": [
-    "<all_urls>"
+    "https://ani.gamer.com.tw/*"
   ],
   "manifest_version": 3
 }

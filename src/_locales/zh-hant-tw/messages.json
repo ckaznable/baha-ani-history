@@ -1,10 +1,10 @@
 {
 	"EXT_NAME" : {
-		"message" : "browser extension template",
+		"message" : "動畫瘋觀看紀錄器",
 		"description" : "manifest name"
 	},
 	"EXT_DESC" : {
-		"message" : "browser extension template supported manifest v3",
+		"message" : "紀錄動畫瘋觀看紀錄",
 		"description" : "manifest description"
 	}
 }

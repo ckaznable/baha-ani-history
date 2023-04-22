@@ -9,7 +9,8 @@
     "persistent": true
   },
   "permissions": [
-    "<all_urls>"
+    "https://ani.gamer.com.tw/*",
+    "storage"
   ],
   "manifest_version": 2
 }

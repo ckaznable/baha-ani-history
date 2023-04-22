@@ -5,7 +5,7 @@
         "script/content.js"
       ],
       "matches": [
-        "<all_urls>"
+        "https://ani.gamer.com.tw/*"
       ],
       "run_at": "document_end"
     }
@@ -22,5 +22,5 @@
     "page": "options.html",
     "open_in_tab": true
   },
-  "default_locale" : "en"
+  "default_locale" : "zh-hant-tw"
 }
