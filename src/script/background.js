@@ -1,3 +1,5 @@
+import { init } from "./storage"
+
 (() => {
-  // do someting...
+  init()
 })()
