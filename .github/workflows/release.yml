@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Relese
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: prepare dependencies
+        run: sudo apt update && sudo apt install zip -y
+
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+
+      - name: build manifest v3
+        run: npm run build
+
+      - name: bundle mv3 file
+        run: zip baha-ani-history_mv3.zip ./dist/* -r
+
+      - name: build manifest v2
+        run: |
+          rm -rf dist
+          npm run build:v2
+
+      - name: bundle mv2 file
+        run: zip baha-ani-history_mv2.zip ./dist/* -r
+
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'baha-ani-history*.zip'
