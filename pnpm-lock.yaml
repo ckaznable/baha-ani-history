@@ -38,8 +38,8 @@ devDependencies:
     specifier: ^0.1.0
     version: 0.1.0(rollup@3.20.7)
   '@types/chrome':
-    specifier: ^0.0.203
-    version: 0.0.203
+    specifier: ^0.0.233
+    version: 0.0.233
   cross-env:
     specifier: ^7.0.3
     version: 7.0.3
@@ -1528,8 +1528,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /@types/chrome@0.0.203:
-    resolution: {integrity: sha512-JlQNebwpBETVc8U1Rr2inDFuOTtn0lahRAhnddx1dd0S5RrLAFJEEsyIu7AXI14mkCgSunksnuLGioH8kvBqRA==}
+  /@types/chrome@0.0.233:
+    resolution: {integrity: sha512-T3HUW8LDhHfYPbUkOZilhnqX04sZqEFIQO0OIG8byZ7PBIk2jYys1AkNg56UbtKbsh3dABmOniK+0Q3oyo7Sxg==}
     dependencies:
       '@types/filesystem': 0.0.32
       '@types/har-format': 1.2.10
