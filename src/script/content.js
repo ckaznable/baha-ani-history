@@ -1,23 +1,71 @@
+import { POST_MESSAGE } from "./constatnt";
 import { addHistory, getHistory } from "./storage"
 
-(async () => {
-  if(!window.location.pathname.includes("animeVideo.php")) {
+let playing = false
+
+;(() => {
+  if(!isVideoPage()) {
     return
   }
 
-  const id = getId()
-  if(!id) {
+  run()
+  installPageListener()
+})()
+
+function onChangePage() {
+  if(!isVideoPage()) {
     return
   }
 
-  // make sure is started
-  const _ = setInterval(() => {
-    const dom = document.querySelector(".vjs-has-started")
-    if(dom) {
-      clearInterval(_)
-      addHistory(id)
+  playing = false
+  run()
+}
+
+function isVideoPage() {
+  return !!window.location.pathname.includes("animeVideo.php")
+}
+
+function installPageListener() {
+  const path = chrome.runtime.getURL("script/injection.js")
+  const dom = document.createElement("script")
+  dom.src = path
+  document.body.append(dom)
+  dom.remove()
+
+  window.addEventListener("message", e => {
+    if(e.data != POST_MESSAGE) {
+      return
     }
+
+    onChangePage()
+  })
+}
+
+function listenPlay() {
+  const _ = setInterval(() => {
+    const dom = document.getElementById("ani_video_html5_api")
+    if(!dom) {
+      return
+    }
+
+    clearInterval(_)
+    dom.removeEventListener("play", handlePlay)
+    dom.addEventListener("play", handlePlay)
   }, 1000)
+}
+
+function handlePlay(e) {
+  if(playing) {
+    return
+  }
+
+  playing = true
+  const id = getId()
+  id && addHistory(id)
+}
+
+async function run() {
+  listenPlay()
 
   const history = await getHistory()
   if(!history.length) {
@@ -29,6 +77,10 @@ import { addHistory, getHistory } from "./storage"
   const domList = Array.from(season)
     .filter(dom => history.includes(getSeasonId(dom)))
     .map(dom => [dom, history.indexOf(getSeasonId(dom))])
+
+  if(!domList.length) {
+    return
+  }
 
   domList.forEach(([dom, index]) => {
     if(!dom.parentElement.classList.contains("playing")) {
@@ -46,7 +98,7 @@ import { addHistory, getHistory } from "./storage"
   if(!lastSawDom.parentElement.classList.contains("playing")) {
     lastSawDom.parentElement.classList.add("saw")
   }
-})()
+}
 
 function getId() {
   const url = new URL(window.location.href)

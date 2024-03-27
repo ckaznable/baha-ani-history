@@ -8,5 +8,8 @@
     "https://ani.gamer.com.tw/*",
     "storage"
   ],
-  "manifest_version": 2
+  "manifest_version": 2,
+  "web_accessible_resources": [
+    "script/injection.js"
+  ]
 }

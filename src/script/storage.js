@@ -8,7 +8,7 @@ export async function init() {
 export function getHistory() {
   return new Promise(resolve => {
     chrome.storage.sync.get("history", items => {
-      resolve(items.history) 
+      resolve(items?.history || []) 
     })
   })
 }

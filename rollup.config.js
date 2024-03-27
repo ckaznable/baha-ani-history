@@ -9,6 +9,7 @@ import path from "path"
 
 const fileList = [
   "script/content.js",
+  "script/injection.js",
   "script/background.js",
   "script/options.js",
 ]

@@ -12,5 +12,13 @@
   "host_permissions": [
     "https://ani.gamer.com.tw/*"
   ],
-  "manifest_version": 3
+  "manifest_version": 3,
+    "web_accessible_resources": [
+    {
+      "resources": [
+        "script/injection.js"
+      ],
+      "matches": ["https://ani.gamer.com.tw/*"]
+    }
+  ]
 }
