@@ -6,7 +6,8 @@
   },
   "permissions": [
     "https://ani.gamer.com.tw/*",
-    "storage"
+    "storage",
+    "contextMenus"
   ],
   "manifest_version": 2,
   "web_accessible_resources": [

@@ -1,13 +1,12 @@
 {
   "name": "baha-ani-history",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "main": "src/script/background.js",
   "homepage": "https://github.com/ckaznable/baha-ani-history",
   "scripts": {
     "build": "cross-env NODE_ENV=production node util/build.js",
     "build:v2": "cross-env NODE_ENV=production MANIFEST_VERSION=2 node util/build.js",
-    "build:safari": "cross-env NODE_ENV=production MANIFEST_VERSION=2 BROWSER=safari node util/build.js",
     "build:dev": "cross-env NODE_ENV=development node util/build.js",
     "watch": "cross-env NODE_ENV=development rollup -c -w"
   },
@@ -15,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/ckaznable/baha-ani-history.git"
   },
-  "author": "kami25565@gmail.com",
+  "author": "ckaznable@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ckaznable/baha-ani-history/issues"
@@ -33,7 +32,7 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-replace": "^5.0.1",
     "@rollup/plugin-terser": "^0.1.0",
-    "@types/chrome": "^0.0.263",
+    "@types/chrome": "^0.0.268",
     "cross-env": "^7.0.3",
     "rollup": "^3.20.7",
     "rollup-plugin-cleanup": "^3.2.1",

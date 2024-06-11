@@ -1,13 +1,15 @@
-import { POST_MESSAGE } from "./constatnt";
-import { addHistory, getHistory } from "./storage"
+import { POST_MESSAGE } from "./constatnt"
+import { addHistory, deleteHistory, getHistory } from "./storage"
 
 let playing = false
+let blockAddToHistory = false
 
 ;(() => {
   if(!isVideoPage()) {
     return
   }
 
+  listenPageEvent()
   run()
   installPageListener()
 })()
@@ -17,6 +19,7 @@ function onChangePage() {
     return
   }
 
+  blockAddToHistory = false
   playing = false
   run()
 }
@@ -55,11 +58,16 @@ function listenPlay() {
 }
 
 function handlePlay(e) {
+  if(blockAddToHistory) {
+    return
+  }
+
   if(playing) {
     return
   }
 
   playing = true
+
   const id = getId()
   id && addHistory(id)
 }
@@ -72,9 +80,12 @@ async function run() {
     return
   }
 
-  const season = getSeasonDomList()
+  const season = Array.from(getSeasonDomList())
 
-  const domList = Array.from(season)
+  // init
+  season.forEach(dom => dom.parentElement.style.backgroundColor = "")
+
+  const domList = season
     .filter(dom => history.includes(getSeasonId(dom)))
     .map(dom => [dom, history.indexOf(getSeasonId(dom))])
 
@@ -119,4 +130,12 @@ function getSeasonId(dom) {
   // cache
   dom.dataset.id = id
   return id
+}
+
+function listenPageEvent() {
+  // 目前事件只會有取消這次觀看紀錄
+  chrome.runtime.onMessage.addListener(() => {
+    blockAddToHistory = true
+    deleteHistory(getId())
+  })
 }
