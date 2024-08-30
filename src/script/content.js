@@ -111,6 +111,14 @@ async function run() {
   }
 }
 
+function removeEpisodeBackground(sn) {
+  Array.from(getSeasonDomList()).forEach(dom => {
+    if (dom.href.includes(`sn=${sn}`)) {
+      dom.parentElement.style.backgroundColor = ""
+    }
+  })
+}
+
 function getId() {
   const url = new URL(window.location.href)
   return url.searchParams.get("sn")
@@ -133,9 +141,21 @@ function getSeasonId(dom) {
 }
 
 function listenPageEvent() {
-  // 目前事件只會有取消這次觀看紀錄
-  chrome.runtime.onMessage.addListener(() => {
-    blockAddToHistory = true
-    deleteHistory(getId())
+  chrome.runtime.onMessage.addListener((msg) => {
+    if (!msg?.type) {
+      return
+    }
+
+    switch (msg.type) {
+    case "page":
+      blockAddToHistory = true
+      deleteHistory(getId())
+      break
+    case "link":
+      const { sn } = msg
+      deleteHistory(sn)
+      removeEpisodeBackground(sn)
+      break
+    }
   })
 }
