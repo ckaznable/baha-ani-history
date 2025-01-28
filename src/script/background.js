@@ -1,3 +1,4 @@
+import { getHistory } from "./storage"
 import { CompressedStorage } from "./storage/compress"
 
 const URL_PATTERN = "https://ani.gamer.com.tw/animeVideo.php?sn=*"
@@ -172,8 +173,12 @@ async function migrateToDataVersionV1() {
   // backup
   chrome.storage.local.set({history})
 
-  const storage = new CompressedStorage()
-  await storage.migrate("history", history)
+  const historyOnSync = await getHistory()
+  if (!historyOnSync || !historyOnSync.length) {
+    const storage = new CompressedStorage()
+    await storage.migrate("history", history)
+  }
+
   await chrome.storage.local.set({version: 1})
 }
 
