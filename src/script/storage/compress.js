@@ -209,12 +209,6 @@ export class CompressedStorage {
     this.cache.clear()
   }
 
-  /**
-   * 將字串陣列轉換為壓縮格式並儲存
-   * @param {string} baseKey - 儲存的基礎鍵值
-   * @param {string[]} items - 要遷移的數字字串陣列
-   * @returns {Promise<void>}
-   */
   async migrate(baseKey, items) {
     if (!Array.isArray(items)) {
       throw new Error('輸入必須是陣列')
