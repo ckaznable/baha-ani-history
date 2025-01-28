@@ -1,27 +1,40 @@
-import { POST_MESSAGE } from "./constatnt"
-import { addHistory, deleteHistory, getHistory } from "./storage"
+import {
+  POST_MESSAGE,
+  MARK_COLOR_BROWN,
+  MARK_COLOR_GREEN,
+  MARK_COLOR_YELLOW,
+  MARK_COLOR_RED,
+  MARK_COLOR_PURPLE
+} from "./constatnt"
+
+import { addHistory, deleteHistory, getHistory, getMarks, addMark, deleteMark } from "./storage"
+
+const MARK_COLOR = ["red", "green", "purple", "yellow", "brown"]
 
 let playing = false
 let blockAddToHistory = false
 
-;(() => {
+;(async () => {
   if(!isVideoPage()) {
     return
   }
 
   listenPageEvent()
-  run()
   installPageListener()
+
+  await handleHistories()
+  await handleMarks()
 })()
 
-function onChangePage() {
+async function onChangePage() {
   if(!isVideoPage()) {
     return
   }
 
   blockAddToHistory = false
   playing = false
-  run()
+  await handleHistories()
+  await handleMarks()
 }
 
 function isVideoPage() {
@@ -72,7 +85,53 @@ function handlePlay(e) {
   id && addHistory(id)
 }
 
-async function run() {
+function getMarkColor(color) {
+  switch (color) {
+    case "red":
+      return MARK_COLOR_RED
+    case "green":
+      return MARK_COLOR_GREEN
+    case "purple":
+      return MARK_COLOR_PURPLE
+    case "yellow":
+      return MARK_COLOR_YELLOW
+    case "brown":
+      return MARK_COLOR_BROWN
+  }
+}
+
+async function getColorMarks(color) {
+  return await getMarks(color)
+}
+
+async function getAllColorMarks() {
+  const marks = {}
+  for(const color of MARK_COLOR) {
+    marks[color] = await getColorMarks(color)
+  }
+  return marks
+}
+
+async function handleMarks() {
+  const marks = await getAllColorMarks()
+  const season = Array.from(getSeasonDomList())
+
+  season.forEach(dom => {
+    const id = getSeasonId(dom)
+    Object.keys(marks).forEach(color => {
+      if(!marks[color].includes(id)) {
+        return
+      }
+
+      const bgColor = getMarkColor(color)
+      if(bgColor) {
+        dom.parentElement.style.backgroundColor = bgColor
+      }
+    })
+  })
+}
+
+async function handleHistories() {
   listenPlay()
 
   const history = await getHistory()
@@ -111,12 +170,35 @@ async function run() {
   }
 }
 
+function getDomWithSN(sn) {
+  return Array.from(getSeasonDomList()).find(dom => dom.href.includes(`sn=${sn}`))
+}
+
 function removeEpisodeBackground(sn) {
-  Array.from(getSeasonDomList()).forEach(dom => {
-    if (dom.href.includes(`sn=${sn}`)) {
-      dom.parentElement.style.backgroundColor = ""
-    }
+  const dom = getDomWithSN(sn)
+  if(dom) {
+    dom.parentElement.style.backgroundColor = ""
+  }
+}
+
+function removeMarkBg(sn) {
+  MARK_COLOR.forEach(color => {
+    deleteMark(sn, color)
   })
+
+  const dom = getDomWithSN(sn)
+  if(dom) {
+    dom.parentElement.style.backgroundColor = ""
+  }
+}
+
+function setMarkBg(sn, color) {
+  addMark(sn, color)
+  const dom = getDomWithSN(sn)
+  const bgColor = getMarkColor(color)
+  if(dom && bgColor) {
+    dom.parentElement.style.backgroundColor = bgColor
+  }
 }
 
 function getId() {
@@ -130,19 +212,19 @@ function getSeasonDomList() {
 
 function getSeasonId(dom) {
   if(dom.dataset.id) {
-    return dom.dataset.id
+    return +dom.dataset.id
   }
 
   const url = new URL(dom.href)
   const id = url.searchParams.get("sn")
   // cache
   dom.dataset.id = id
-  return id
+  return +id
 }
 
 function listenPageEvent() {
   chrome.runtime.onMessage.addListener((msg) => {
-    if (!msg?.type) {
+    if(!msg?.type) {
       return
     }
 
@@ -155,6 +237,10 @@ function listenPageEvent() {
       const { sn } = msg
       deleteHistory(sn)
       removeEpisodeBackground(sn)
+      break
+    case "mark":
+      const { sn: markSN, color, action } = msg
+      action == "delete" ? removeMarkBg(markSN) : setMarkBg(markSN, color)
       break
     }
   })
