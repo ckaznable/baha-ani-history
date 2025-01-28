@@ -1,6 +1,6 @@
 {
   "name": "baha-ani-history",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "type": "module",
   "main": "src/script/background.js",
   "homepage": "https://github.com/ckaznable/baha-ani-history",
