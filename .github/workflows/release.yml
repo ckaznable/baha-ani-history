@@ -45,6 +45,9 @@ jobs:
         run: zip baha-ani-history_mv2.zip ./dist/* -r
 
       - name: Publish
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: 'baha-ani-history*.zip'
+          files: |
+            'baha-ani-history_mv3.zip'
+            'baha-ani-history_mv2.zip'
