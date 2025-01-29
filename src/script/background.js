@@ -1,8 +1,8 @@
 import { getHistory } from "./storage"
 import { CompressedStorage } from "./storage/compress"
+import { MARK_COLOR } from "./constatnt"
 
 const URL_PATTERN = "https://ani.gamer.com.tw/animeVideo.php?sn=*"
-const MARK_COLOR = ["red", "green", "purple", "yellow", "brown"]
 const MARK_EP_CONTEXT_MENU_ID = "anime.mark"
 
 const markHandlers = MARK_COLOR.reduce((acc, color) => ({
@@ -140,6 +140,12 @@ function getColorTitle(color) {
       return "黃色"
     case "brown":
       return "咖啡色"
+    case "white":
+      return "白色"
+    case "orange":
+      return "橘色"
+    case "gold":
+      return "金色"
   }
 }
 

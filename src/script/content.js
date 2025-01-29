@@ -4,12 +4,14 @@ import {
   MARK_COLOR_GREEN,
   MARK_COLOR_YELLOW,
   MARK_COLOR_RED,
-  MARK_COLOR_PURPLE
+  MARK_COLOR_PURPLE,
+  MARK_COLOR_WHITE,
+  MARK_COLOR_ORANGE,
+  MARK_COLOR_GOLD,
 } from "./constatnt"
 
 import { addHistory, deleteHistory, getHistory, getMarks, addMark, deleteMark } from "./storage"
-
-const MARK_COLOR = ["red", "green", "purple", "yellow", "brown"]
+import { MARK_COLOR } from "./constatnt"
 
 let playing = false
 let blockAddToHistory = false
@@ -97,6 +99,12 @@ function getMarkColor(color) {
       return MARK_COLOR_YELLOW
     case "brown":
       return MARK_COLOR_BROWN
+    case "white":
+      return MARK_COLOR_WHITE
+    case "orange":
+      return MARK_COLOR_ORANGE
+    case "gold":
+      return MARK_COLOR_GOLD
   }
 }
 
