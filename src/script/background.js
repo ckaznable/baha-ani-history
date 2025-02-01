@@ -146,6 +146,14 @@ function getColorTitle(color) {
       return "橘色"
     case "gold":
       return "金色"
+    case "pink":
+      return "粉紅色"
+    case "blue":
+      return "藍色"
+    case "cyan":
+      return "青色"
+    case "black":
+      return "黑色"
   }
 }
 

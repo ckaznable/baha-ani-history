@@ -8,6 +8,10 @@ import {
   MARK_COLOR_WHITE,
   MARK_COLOR_ORANGE,
   MARK_COLOR_GOLD,
+  MARK_COLOR_PINK,
+  MARK_COLOR_BLUE,
+  MARK_COLOR_CYAN,
+  MARK_COLOR_BLACK,
 } from "./constatnt"
 
 import { addHistory, deleteHistory, getHistory, getMarks, addMark, deleteMark } from "./storage"
@@ -105,6 +109,14 @@ function getMarkColor(color) {
       return MARK_COLOR_ORANGE
     case "gold":
       return MARK_COLOR_GOLD
+    case "pink":
+      return MARK_COLOR_PINK
+    case "blue":
+      return MARK_COLOR_BLUE
+    case "cyan":
+      return MARK_COLOR_CYAN
+    case "black":
+      return MARK_COLOR_BLACK
   }
 }
 
