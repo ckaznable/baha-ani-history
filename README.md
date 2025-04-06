@@ -4,6 +4,8 @@
 
 [![Firefox](https://img.shields.io/badge/Firefox-FF7139?style=for-the-badge&logo=Firefox-Browser&logoColor=white)](https://addons.mozilla.org/addon/baha-ani-history/)
 
+[![Edge](https://img.shields.io/badge/Edge-0078D7?style=for-the-badge&logo=Microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/leicaplcnbnmanglplkcaccicjmgdmmg)
+
 ![demo](./doc/demo.png)
 
 巴哈的觀看紀錄看起來有限制，太久以前看過的動畫紀錄看起來不會存起來，所以這個插件會把觀看紀錄存在瀏覽器帳號上
