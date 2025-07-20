@@ -21,11 +21,12 @@ let playing = false
 let blockAddToHistory = false
 
 ;(async () => {
+  listenPageEvent()
+
   if(!isVideoPage()) {
     return
   }
 
-  listenPageEvent()
   installPageListener()
 
   await handleHistories()
@@ -242,6 +243,10 @@ function getSeasonId(dom) {
   return +id
 }
 
+function onlyShowFavAnime() {
+  document.querySelectorAll(".newanime-date-area:not(:has(.btn-is-active))").forEach(d => d.style.display = "none")
+}
+
 function listenPageEvent() {
   chrome.runtime.onMessage.addListener((msg) => {
     if(!msg?.type) {
@@ -261,6 +266,9 @@ function listenPageEvent() {
     case "mark":
       const { sn: markSN, color, action } = msg
       action == "delete" ? removeMarkBg(markSN) : setMarkBg(markSN, color)
+      break
+    case "index":
+      onlyShowFavAnime()
       break
     }
   })

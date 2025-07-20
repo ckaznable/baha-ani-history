@@ -5,7 +5,7 @@
         "script/content.js"
       ],
       "matches": [
-        "https://ani.gamer.com.tw/animeVideo.php*"
+        "https://ani.gamer.com.tw/*"
       ],
       "run_at": "document_end"
     }

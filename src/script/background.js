@@ -128,6 +128,30 @@ function initMarkColorMenu(color) {
   })
 }
 
+function contextIndexPageCallback({ menuItemId }, tab) {
+  if(menuItemId !== "index.only_show_fav") {
+    return
+  }
+
+  try {
+    chrome.tabs.sendMessage(tab.id, { type: "index" })
+  } catch(e) {}
+}
+
+function initIndexPageContextMenu() {
+  chrome.contextMenus.onClicked.removeListener(contextIndexPageCallback)
+  chrome.contextMenus.onClicked.addListener(contextIndexPageCallback)
+
+  const id = "index.only_show_fav"
+  chrome.contextMenus.remove(id)
+  chrome.contextMenus.create({
+    id,
+    title: "只顯示收藏的動畫",
+    contexts: ["page"],
+    documentUrlPatterns: ["https://ani.gamer.com.tw/"],
+  })
+}
+
 function getColorTitle(color) {
   switch (color) {
     case "red":
@@ -161,6 +185,7 @@ function initContextMenu() {
   initPageContextMenu()
   initLinkContextMenu()
   initMarkEPContextMenu()
+  initIndexPageContextMenu()
 }
 
 async function migrateToDataVersionV1() {
