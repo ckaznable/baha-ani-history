@@ -14,7 +14,7 @@ const isProduction = env === "production"
 
 if(isProduction) {
   // clear dist folder
-  execSync("rm -rf ./dist; mkdir ./dist")
+  fs.mkdirSync("./dist", { recursive: true })
 }
 
 // copy assets
@@ -26,11 +26,12 @@ const assetsPath = [
 ]
 
 for (const path of assetsPath) {
-  execSync(`cp ${isProduction?"-f":"-n"} -R src/${path} dist/${path}`, {stdio: 'inherit'})
+  fs.cpSync(`./src/${path}`, `./dist/${path}`, { recursive: true })
 }
 
 // copy .html file
-execSync(`cp ${isProduction?"-f":"-n"} -R src/*.html dist/`, {stdio: 'inherit'})
+fs.cpSync(`./src/background.html`, `./dist/background.html`, { recursive: true })
+fs.cpSync(`./src/options.html`, `./dist/options.html`, { recursive: true })
 
 // build dist
 execSync(`npx cross-env NODE_ENV=${env} MANIFEST_VERSION=${manifestVersion} BROWSER=${browser} rollup -c`, {stdio: 'inherit'})
